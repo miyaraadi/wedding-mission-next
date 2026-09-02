@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Heebo:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap");
+
 :root {
   --burgundy: #6b1724;
   --burgundy-dark: #471018;
@@ -27,7 +29,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  font-family: Arial, sans-serif;
+
+  font-family: "Heebo", sans-serif;
   color: var(--brown);
 
   background-image:
@@ -63,19 +66,24 @@ body::before {
     brightness(0.98);
 }
 
+button,
+input {
+  font-family: "Heebo", sans-serif;
+}
+
 .page {
   width: 100%;
   min-height: 100vh;
 
   padding:
-    14px
+    10px
     12px
-    30px;
+    28px;
 }
 
 .hero {
-  width: 95%;
-  margin: 0 auto 10px;
+  width: 96%;
+  margin: 0 auto 7px;
   text-align: center;
 }
 
@@ -84,24 +92,31 @@ body::before {
   margin-bottom: 5px;
   padding: 4px 14px 5px;
 
-  font-family: Georgia, serif;
+  font-family: "Cormorant Garamond", serif;
   font-size: 17px;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.34em;
 
   color: #6f512d;
   background: rgba(255, 252, 246, 0.96);
+
   border-radius: 14px;
+
+  box-shadow:
+    0 3px 10px rgba(74, 45, 24, 0.10);
 }
 
 .hero h1 {
   margin: 0;
-  font-family: Georgia, serif;
+
+  font-family: "Cormorant Garamond", serif;
   font-size: clamp(52px, 12vw, 78px);
   line-height: 0.92;
   font-weight: 600;
   letter-spacing: 0.005em;
+
   color: var(--burgundy);
+
   white-space: nowrap;
 }
 
@@ -112,12 +127,14 @@ body::before {
 }
 
 .date {
-  margin-top: 3px;
-  font-family: Georgia, serif;
+  margin-top: 2px;
+
+  font-family: "Playfair Display", serif;
   font-size: clamp(58px, 15vw, 84px);
   line-height: 1;
   font-weight: 600;
   letter-spacing: 0.02em;
+
   color: var(--gold);
 }
 
@@ -129,8 +146,14 @@ main {
 
 .mission-card {
   width: 100%;
-  padding: 16px 14px 15px;
+
+  padding:
+    15px
+    14px
+    14px;
+
   text-align: center;
+
   border-radius: 24px;
 
   background:
@@ -140,7 +163,8 @@ main {
       rgba(246, 232, 207, 0.54)
     );
 
-  border: 1px solid rgba(169, 126, 59, 0.80);
+  border:
+    1px solid rgba(169, 126, 59, 0.80);
 
   box-shadow:
     0 12px 34px rgba(47, 25, 16, 0.18),
@@ -150,25 +174,38 @@ main {
 }
 
 .mission-label {
+  font-family: "Heebo", sans-serif;
   font-size: 15px;
+  font-weight: 400;
+
   color: #705e57;
 }
 
 .mission-number {
-  margin: 5px 0 0;
-  font-family: Georgia, serif;
+  margin: 4px 0 0;
+
+  font-family: "Cormorant Garamond", serif;
   font-size: clamp(64px, 16vw, 88px);
-  line-height: 0.92;
+  line-height: 0.88;
   font-weight: 600;
+
   color: var(--burgundy);
 }
 
 .mission-text {
   max-width: 96%;
-  margin: 22px auto 16px;
+
+  margin:
+    18px
+    auto
+    15px;
+
+  font-family: "Heebo", sans-serif;
   font-size: clamp(19px, 4.5vw, 23px);
-  line-height: 1.34;
+  line-height: 1.38;
   font-weight: 500;
+
+  color: #35251e;
 }
 
 .name-area {
@@ -176,88 +213,276 @@ main {
 }
 
 .name-area label {
+  position: relative;
+
   display: block;
-  margin-bottom: 5px;
+  width: fit-content;
+
+  margin:
+    0
+    auto
+    5px;
+
   font-size: 16px;
   font-weight: 500;
+
   color: var(--burgundy);
 }
 
 .name-area label span {
+  position: absolute;
+
+  right: 100%;
+  top: 50%;
+
+  transform: translateY(-50%);
+
   margin-right: 7px;
+
+  white-space: nowrap;
+
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 300;
+
   color: var(--muted);
 }
 
 .name-area input {
   width: 100%;
   height: 41px;
-  padding: 0 10px;
 
-  border: 1px solid rgba(159, 117, 51, 0.58);
+  padding:
+    0
+    10px;
+
+  border:
+    1px solid rgba(159, 117, 51, 0.58);
+
   border-radius: 10px;
   outline: none;
 
-  background: rgba(255, 251, 242, 0.58);
+  background:
+    rgba(255, 251, 242, 0.62);
+
   text-align: center;
+
   font-size: 15px;
+  color: #392820;
+}
+
+.name-area input::placeholder {
+  color: rgba(86, 67, 58, 0.58);
 }
 
 .upload-title {
-  margin: 1px 0 8px;
+  margin:
+    2px
+    0
+    8px;
+
   font-size: 15px;
   font-weight: 500;
+
+  color: #443027;
 }
 
 .upload-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
   gap: 8px;
 }
 
 .upload-btn {
-  min-height: 70px;
-  padding: 8px 6px;
+  min-height: 74px;
+
+  padding:
+    8px
+    6px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
+  gap: 5px;
+
   border-radius: 12px;
-  border: 1px solid var(--gold-light);
+
+  border:
+    1px solid var(--gold-light);
+
   cursor: pointer;
+
+  box-shadow:
+    0 5px 13px rgba(57, 32, 24, 0.11);
+}
+
+.upload-btn strong {
+  position: relative;
+
+  padding-top: 29px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.1;
 }
 
 .upload-btn.burgundy {
-  background: linear-gradient(145deg, #79222e, #54151e);
+  background:
+    linear-gradient(
+      145deg,
+      #79222e,
+      #54151e
+    );
+
   color: #fff8eb;
 }
 
 .upload-btn.gold {
-  background: linear-gradient(145deg, #b28b49, #8d682e);
+  background:
+    linear-gradient(
+      145deg,
+      #b28b49,
+      #8d682e
+    );
+
   color: #fff9ed;
+}
+
+/* CAMERA ICON */
+
+.upload-btn.burgundy strong::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 27px;
+  height: 19px;
+
+  transform: translateX(-50%);
+
+  border:
+    2px solid currentColor;
+
+  border-radius: 4px;
+}
+
+.upload-btn.burgundy strong::after {
+  content: "";
+
+  position: absolute;
+
+  top: 4px;
+  left: 50%;
+
+  width: 8px;
+  height: 8px;
+
+  transform: translateX(-50%);
+
+  border:
+    2px solid currentColor;
+
+  border-radius: 50%;
+
+  box-shadow:
+    -8px -7px 0 -5px currentColor;
+}
+
+/* GALLERY ICON */
+
+.upload-btn.gold strong::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 27px;
+  height: 21px;
+
+  transform: translateX(-50%);
+
+  border:
+    2px solid currentColor;
+
+  border-radius: 4px;
+}
+
+.upload-btn.gold strong::after {
+  content: "";
+
+  position: absolute;
+
+  top: 6px;
+  left: 50%;
+
+  width: 17px;
+  height: 10px;
+
+  transform:
+    translateX(-50%)
+    rotate(-1deg);
+
+  border-left:
+    2px solid currentColor;
+
+  border-bottom:
+    2px solid currentColor;
+
+  clip-path:
+    polygon(
+      0 100%,
+      35% 45%,
+      55% 67%,
+      73% 30%,
+      100% 100%
+    );
+
+  background: currentColor;
 }
 
 .selected-files-area {
   width: 100%;
+
   margin-top: 11px;
+
   padding: 10px;
 
-  border: 1px solid rgba(154, 112, 51, 0.42);
+  border:
+    1px solid rgba(154, 112, 51, 0.42);
+
   border-radius: 13px;
 
-  background: rgba(255, 250, 239, 0.62);
+  background:
+    rgba(255, 250, 239, 0.66);
 }
 
 .selected-files-header {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 7px;
+
   margin-bottom: 9px;
+
   color: var(--burgundy);
+}
+
+.selected-files-header strong {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .selected-files-header span {
@@ -265,51 +490,75 @@ main {
   height: 24px;
 
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
   border-radius: 50%;
+
   background: var(--burgundy);
   color: white;
+
   font-size: 12px;
 }
 
 .selected-files-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
   gap: 8px;
+
   width: 100%;
 
   max-height: 118px;
+
   overflow-y: auto;
   overflow-x: hidden;
 
-  padding: 2px 4px 2px 2px;
+  padding:
+    2px
+    4px
+    2px
+    2px;
+
   overscroll-behavior: contain;
+
   -webkit-overflow-scrolling: touch;
 }
 
 .file-preview {
   position: relative;
+
   width: 100%;
+
   aspect-ratio: 1 / 1;
+
   overflow: hidden;
 
   border-radius: 10px;
-  background: rgba(87, 55, 38, 0.10);
-  border: 1px solid rgba(144, 102, 43, 0.32);
+
+  background:
+    rgba(87, 55, 38, 0.10);
+
+  border:
+    1px solid rgba(144, 102, 43, 0.32);
 }
 
 .file-preview img,
 .file-preview video {
   display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
 }
 
 .file-remove {
   position: absolute;
+
   top: 4px;
   right: 4px;
 
@@ -319,55 +568,97 @@ main {
   border: 0;
   border-radius: 50%;
 
-  background: rgba(91, 22, 31, 0.94);
+  background:
+    rgba(91, 22, 31, 0.94);
+
   color: white;
 
   font-size: 18px;
+  line-height: 1;
+
   cursor: pointer;
 }
 
 .add-more-text {
   margin-top: 10px;
+
   padding-top: 8px;
 
-  border-top: 1px solid rgba(155, 112, 48, 0.25);
+  border-top:
+    1px solid rgba(155, 112, 48, 0.25);
 
   text-align: center;
+
   font-size: 13px;
   font-weight: 500;
+
   color: #765225;
 }
 
 .final-upload {
   width: 100%;
-  min-height: 44px;
-  margin-top: 10px;
-  padding: 9px 12px;
+  min-height: 46px;
 
-  border: 1px solid var(--gold-light);
+  margin-top: 10px;
+
+  padding:
+    9px
+    12px;
+
+  border:
+    1px solid var(--gold-light);
+
   border-radius: 10px;
 
-  background: linear-gradient(145deg, #741f2a, #4b1118);
+  background:
+    linear-gradient(
+      145deg,
+      #741f2a,
+      #4b1118
+    );
+
   color: #fff8e8;
 
   font-size: 15px;
   font-weight: 500;
+
   cursor: pointer;
+
+  box-shadow:
+    0 5px 14px rgba(51, 24, 20, 0.14);
 }
 
 .loading-box {
   width: 100%;
+
   margin-top: 10px;
+
   padding: 11px;
 
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
 
+  gap: 5px;
+
   border-radius: 11px;
-  background: rgba(91, 24, 33, 0.94);
+
+  background:
+    rgba(91, 24, 33, 0.94);
+
   color: #fff7e9;
+}
+
+.loading-box strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.loading-box span {
+  font-size: 12px;
+  opacity: 0.8;
 }
 
 .loader {
@@ -375,10 +666,17 @@ main {
   height: 21px;
 
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.25);
+
+  border:
+    2px solid rgba(255, 255, 255, 0.25);
+
   border-top-color: #fff5dd;
 
-  animation: spin 0.8s linear infinite;
+  animation:
+    spin
+    0.8s
+    linear
+    infinite;
 }
 
 @keyframes spin {
@@ -388,67 +686,146 @@ main {
 }
 
 .status-text {
-  margin-top: 6px;
-  font-size: 12px;
+  margin-top: 8px;
+
+  font-size: 13px;
+  font-weight: 500;
+
   color: var(--burgundy);
 }
 
 .whatsapp {
   width: 100%;
+
   margin-top: 12px;
+
   padding-top: 10px;
 
-  border-top: 1px solid rgba(162, 122, 50, 0.34);
+  border-top:
+    1px solid rgba(162, 122, 50, 0.34);
 }
 
 .whatsapp-title {
   margin-bottom: 7px;
+
   font-size: 15px;
   font-weight: 500;
+
   color: var(--burgundy-dark);
 }
 
 .whatsapp-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
   gap: 7px;
 }
 
 .whatsapp-buttons a {
   min-height: 48px;
+
   padding: 6px;
 
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
 
   text-decoration: none;
 
-  border: 1px solid rgba(153, 111, 48, 0.50);
+  border:
+    1px solid rgba(153, 111, 48, 0.50);
+
   border-radius: 9px;
 
-  background: rgba(255, 249, 237, 0.58);
+  background:
+    rgba(255, 249, 237, 0.60);
+
   color: var(--burgundy-dark);
 }
 
+.whatsapp-buttons strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.whatsapp-buttons span {
+  font-size: 12px;
+  color: #715c50;
+}
+
 .success-card {
-  padding: 30px 18px;
+  padding:
+    30px
+    18px;
 }
 
 .success-mark {
   width: 44px;
   height: 44px;
-  margin: 0 auto 10px;
+
+  margin:
+    0
+    auto
+    10px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   border-radius: 50%;
+
   background: var(--burgundy);
+
   color: white;
+
   font-size: 22px;
+}
+
+.success-card h2 {
+  margin:
+    4px
+    0
+    8px;
+
+  font-family: "Heebo", sans-serif;
+
+  font-size: 30px;
+  line-height: 1.2;
+
+  font-weight: 500;
+
+  color: var(--burgundy);
+}
+
+.success-card p {
+  margin: 0;
+
+  font-family: "Heebo", sans-serif;
+
+  font-size: 17px;
+  line-height: 1.4;
+
+  font-weight: 400;
+}
+
+.success-names {
+  margin-top: 14px;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 36px;
+
+  color: var(--gold);
+
+  letter-spacing: 0.03em;
 }
 
 .hidden {
@@ -458,5 +835,25 @@ main {
 @media (max-width: 600px) {
   body {
     background-attachment: scroll;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 47px;
+    letter-spacing: -0.01em;
+  }
+
+  .date {
+    font-size: 49px;
+  }
+
+  .small-title {
+    font-size: 15px;
+    letter-spacing: 0.27em;
+  }
+
+  .mission-number {
+    font-size: 65px;
   }
 }
