@@ -121,30 +121,38 @@ export default function Home() {
     return data.upload_url;
   }
 
-  async function uploadFileDirectlyToDrive(file, uploadUrl) {
+async function uploadFileDirectlyToDrive(file, uploadUrl) {
+  try {
     const response = await fetch(uploadUrl, {
       method: "PUT",
       headers: {
-        "Content-Type": file.type || "application/octet-stream",
         "Content-Length": String(file.size),
       },
       body: file,
     });
 
-    if (!response.ok) {
-      let errorText = "";
-
-      try {
-        errorText = await response.text();
-      } catch {}
-
-      console.error("Google Drive upload error:", errorText);
-
-      throw new Error(
-        `העלאת ${file.name} נכשלה.`
-      );
+    if (response.status === 200 || response.status === 201) {
+      return true;
     }
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "");
+
+      console.error(
+        "Google Drive upload error:",
+        response.status,
+        errorText
+      );
+
+      throw new Error(`העלאת ${file.name} נכשלה.`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Direct Drive upload error:", error);
+    throw error;
   }
+}
 
   async function handleUpload() {
     if (!selectedFiles.length) {
