@@ -1,4 +1,4 @@
-import missions from "../../../../../missions.json";
+import missions from "../../../../missions.json";
 
 export async function GET(request, context) {
   const { id } = await context.params;
