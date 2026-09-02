@@ -91,6 +91,61 @@ export default function Home() {
     );
   }
 
+  async function createUploadSession(file) {
+    const response = await fetch("/api/upload-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mission_id: missionId,
+        uploader_name: guestName.trim(),
+        filename: file.name,
+        mime_type: file.type || "application/octet-stream",
+        file_size: file.size,
+      }),
+    });
+
+    let data = {};
+
+    try {
+      data = await response.json();
+    } catch {}
+
+    if (!response.ok || !data.success || !data.upload_url) {
+      throw new Error(
+        data.message || "לא הצלחנו להכין את הקובץ להעלאה."
+      );
+    }
+
+    return data.upload_url;
+  }
+
+  async function uploadFileDirectlyToDrive(file, uploadUrl) {
+    const response = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": file.type || "application/octet-stream",
+        "Content-Length": String(file.size),
+      },
+      body: file,
+    });
+
+    if (!response.ok) {
+      let errorText = "";
+
+      try {
+        errorText = await response.text();
+      } catch {}
+
+      console.error("Google Drive upload error:", errorText);
+
+      throw new Error(
+        `העלאת ${file.name} נכשלה.`
+      );
+    }
+  }
+
   async function handleUpload() {
     if (!selectedFiles.length) {
       setStatusText("בחרו קודם תמונה או סרטון.");
@@ -110,40 +165,30 @@ export default function Home() {
             : `מעלים קובץ ${i + 1} מתוך ${selectedFiles.length}…`
         );
 
-        const formData = new FormData();
+        const uploadUrl =
+          await createUploadSession(file);
 
-        formData.append("file", file);
-        formData.append("mission_id", missionId);
-
-        if (guestName.trim()) {
-          formData.append("uploader_name", guestName.trim());
-        }
-
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        let data = {};
-
-        try {
-          data = await response.json();
-        } catch {}
-
-        if (!response.ok || !data.success) {
-          throw new Error(
-            data.message || `העלאת קובץ ${i + 1} נכשלה.`
-          );
-        }
+        await uploadFileDirectlyToDrive(
+          file,
+          uploadUrl
+        );
       }
 
       setSuccess(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
     } catch (error) {
+      console.error(error);
+
       setStatusText(
         error.message ||
           "ההעלאה נכשלה. אפשר גם לשלוח לנו בוואטסאפ."
       );
+
     } finally {
       setUploading(false);
       setUploadProgress("");
@@ -155,18 +200,27 @@ export default function Home() {
       <div className="page">
         <header className="hero">
           <div className="small-title">WEDDING MISSION</div>
+
           <h1>
             ADI <span>&</span> NITAY
           </h1>
+
           <div className="date">11.03.2027</div>
         </header>
 
         <main>
           <section className="mission-card success-card">
             <div className="success-mark">✓</div>
+
             <h2>המשימה הושלמה</h2>
-            <p>תודה ששמרתם איתנו עוד זיכרון מהחתונה</p>
-            <div className="success-names">ADI & NITAY</div>
+
+            <p>
+              תודה ששמרתם איתנו עוד זיכרון מהחתונה
+            </p>
+
+            <div className="success-names">
+              ADI & NITAY
+            </div>
           </section>
         </main>
       </div>
@@ -176,29 +230,39 @@ export default function Home() {
   return (
     <div className="page">
       <header className="hero">
-        <div className="small-title">WEDDING MISSION</div>
+        <div className="small-title">
+          WEDDING MISSION
+        </div>
 
         <h1>
           ADI <span>&</span> NITAY
         </h1>
 
-        <div className="date">11.03.2027</div>
+        <div className="date">
+          11.03.2027
+        </div>
       </header>
 
       <main>
         <section className="mission-card">
           <div className="mission-head">
-            <div className="mission-label">המשימה שלכם</div>
+            <div className="mission-label">
+              המשימה שלכם
+            </div>
+
             <div className="mission-number">
               {missionId ? `#${missionId}` : ""}
             </div>
           </div>
 
-          <div className="mission-text">{missionText}</div>
+          <div className="mission-text">
+            {missionText}
+          </div>
 
           <div className="name-area">
             <label htmlFor="guestName">
-              השם שלכם <span>לא חובה</span>
+              השם שלכם
+              <span>לא חובה</span>
             </label>
 
             <input
@@ -207,7 +271,9 @@ export default function Home() {
               maxLength={80}
               placeholder="איך נדע מי שלח?"
               value={guestName}
-              onChange={(e) => setGuestName(e.target.value)}
+              onChange={(e) =>
+                setGuestName(e.target.value)
+              }
               disabled={uploading}
             />
           </div>
@@ -218,7 +284,9 @@ export default function Home() {
 
           <div className="upload-buttons">
             <label className="upload-btn burgundy">
-              <strong>צילום עכשיו</strong>
+              <strong>
+                צילום עכשיו
+              </strong>
 
               <input
                 type="file"
@@ -235,7 +303,9 @@ export default function Home() {
             </label>
 
             <label className="upload-btn gold">
-              <strong>בחירה מהגלריה</strong>
+              <strong>
+                בחירה מהגלריה
+              </strong>
 
               <input
                 type="file"
@@ -254,8 +324,13 @@ export default function Home() {
           {selectedFiles.length > 0 && (
             <div className="selected-files-area">
               <div className="selected-files-header">
-                <strong>הקבצים שבחרתם</strong>
-                <span>{selectedFiles.length}</span>
+                <strong>
+                  הקבצים שבחרתם
+                </strong>
+
+                <span>
+                  {selectedFiles.length}
+                </span>
               </div>
 
               <div className="selected-files-grid">
@@ -263,7 +338,9 @@ export default function Home() {
                   <FilePreview
                     key={`${file.name}-${file.lastModified}-${index}`}
                     file={file}
-                    onRemove={() => removeFile(index)}
+                    onRemove={() =>
+                      removeFile(index)
+                    }
                   />
                 ))}
               </div>
@@ -274,28 +351,37 @@ export default function Home() {
             </div>
           )}
 
-          {selectedFiles.length > 0 && !uploading && (
-            <button
-              type="button"
-              className="final-upload"
-              onClick={handleUpload}
-            >
-              {selectedFiles.length === 1
-                ? "העלאת הקובץ"
-                : `העלאת ${selectedFiles.length} קבצים`}
-            </button>
-          )}
+          {selectedFiles.length > 0 &&
+            !uploading && (
+              <button
+                type="button"
+                className="final-upload"
+                onClick={handleUpload}
+              >
+                {selectedFiles.length === 1
+                  ? "העלאת הקובץ"
+                  : `העלאת ${selectedFiles.length} קבצים`}
+              </button>
+            )}
 
           {uploading && (
             <div className="loading-box">
               <div className="loader"></div>
-              <strong>{uploadProgress}</strong>
-              <span>אל תסגרו את החלון</span>
+
+              <strong>
+                {uploadProgress}
+              </strong>
+
+              <span>
+                אל תסגרו את החלון
+              </span>
             </div>
           )}
 
           {statusText && (
-            <div className="status-text">{statusText}</div>
+            <div className="status-text">
+              {statusText}
+            </div>
           )}
 
           <div className="whatsapp">
@@ -323,38 +409,53 @@ export default function Home() {
               </a>
             </div>
           </div>
+
         </section>
       </main>
     </div>
   );
 }
 
-function FilePreview({ file, onRemove }) {
-  const [url, setUrl] = useState("");
+function FilePreview({
+  file,
+  onRemove,
+}) {
+  const [url, setUrl] =
+    useState("");
 
   useEffect(() => {
-    const objectUrl = URL.createObjectURL(file);
+    const objectUrl =
+      URL.createObjectURL(file);
+
     setUrl(objectUrl);
 
     return () => {
-      URL.revokeObjectURL(objectUrl);
+      URL.revokeObjectURL(
+        objectUrl
+      );
     };
   }, [file]);
 
   return (
     <div className="file-preview">
-      {file.type.startsWith("image/") && url && (
-        <img src={url} alt={file.name} />
-      )}
 
-      {file.type.startsWith("video/") && url && (
-        <video
-          src={url}
-          controls
-          playsInline
-          preload="metadata"
-        />
-      )}
+      {file.type.startsWith("image/") &&
+        url && (
+          <img
+            src={url}
+            alt={file.name}
+          />
+        )}
+
+      {file.type.startsWith("video/") &&
+        url && (
+          <video
+            src={url}
+            controls
+            playsInline
+            preload="metadata"
+          />
+        )}
 
       <button
         type="button"
@@ -364,6 +465,7 @@ function FilePreview({ file, onRemove }) {
       >
         ×
       </button>
+
     </div>
   );
 }
