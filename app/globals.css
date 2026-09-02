@@ -89,7 +89,7 @@ input {
 
 .small-title {
   display: inline-block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   padding: 4px 14px 5px;
 
   font-family: "Cormorant Garamond", serif;
@@ -107,7 +107,7 @@ input {
 }
 
 .hero h1 {
-  margin: 0;
+  margin: 0 0 -3px 0;
 
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(52px, 12vw, 78px);
@@ -127,10 +127,10 @@ input {
 }
 
 .date {
-  margin-top: 2px;
+  margin-top: 0;
 
   font-family: "Playfair Display", serif;
-  font-size: clamp(58px, 15vw, 84px);
+  font-size: clamp(46px, 12vw, 68px);
   line-height: 1;
   font-weight: 600;
   letter-spacing: 0.02em;
