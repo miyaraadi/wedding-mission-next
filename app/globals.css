@@ -26,44 +26,61 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+
   overflow-x: hidden;
   overflow-y: auto;
 
   font-family: "Heebo", sans-serif;
   color: var(--brown);
 
-  background-image:
-    linear-gradient(
-      rgba(157, 105, 63, 0.08),
-      rgba(74, 39, 29, 0.12)
-    ),
-    url("/couple-vintage-bg.png");
+  background: #d8c4a7;
 
-  background-size: cover;
-  background-position: 50% 34%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  overscroll-behavior-y: none;
 }
 
+/* תמונת הרקע עצמה */
 body::before {
   content: "";
+
   position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
+  inset: -3px;
+
+  z-index: -2;
 
   background:
-    linear-gradient(
-      rgba(120, 75, 42, 0.10),
-      rgba(88, 47, 31, 0.12)
-    );
+    url("/couple-vintage-bg.png")
+    center 34% / cover
+    no-repeat;
 
-  backdrop-filter:
+  filter:
     sepia(0.34)
     saturate(0.76)
     contrast(0.96)
     brightness(0.98);
+
+  transform: scale(1.015);
+
+  pointer-events: none;
+}
+
+/* הגוון הווינטג׳י מעל כל התמונה */
+body::after {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      rgba(157, 105, 63, 0.10),
+      rgba(74, 39, 29, 0.14)
+    );
+
+  pointer-events: none;
 }
 
 button,
@@ -832,11 +849,6 @@ main {
   display: none !important;
 }
 
-@media (max-width: 600px) {
-  body {
-    background-attachment: scroll;
-  }
-}
 
 @media (max-width: 380px) {
   .hero h1 {
