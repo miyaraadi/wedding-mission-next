@@ -121,13 +121,36 @@ export default function Home() {
     return data.upload_url;
   }
 
+async function checkUploadStatus(uploadUrl, fileSize) {
+  try {
+    const response = await fetch("/api/upload-status", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        upload_url: uploadUrl,
+        file_size: fileSize,
+      }),
+    });
+
+    const data = await response.json();
+
+    return (
+      response.ok &&
+      data.success === true &&
+      data.complete === true
+    );
+  } catch (error) {
+    console.error("Could not verify upload:", error);
+    return false;
+  }
+}
+
 async function uploadFileDirectlyToDrive(file, uploadUrl) {
   try {
     const response = await fetch(uploadUrl, {
       method: "PUT",
-      headers: {
-        "Content-Length": String(file.size),
-      },
       body: file,
     });
 
@@ -135,22 +158,40 @@ async function uploadFileDirectlyToDrive(file, uploadUrl) {
       return true;
     }
 
-    if (!response.ok) {
-      const errorText = await response.text().catch(() => "");
+    const complete = await checkUploadStatus(
+      uploadUrl,
+      file.size
+    );
 
-      console.error(
-        "Google Drive upload error:",
-        response.status,
-        errorText
-      );
-
-      throw new Error(`העלאת ${file.name} נכשלה.`);
+    if (complete) {
+      return true;
     }
 
-    return true;
+    throw new Error(`העלאת ${file.name} נכשלה.`);
   } catch (error) {
+    /*
+      ייתכן שהקובץ הגיע ל-Google Drive,
+      אבל הדפדפן לא הורשה לקרוא את תשובת Google.
+      לכן מוודאים מול Google דרך השרת לפני
+      שמציגים הודעת כישלון.
+    */
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, 700)
+    );
+
+    const complete = await checkUploadStatus(
+      uploadUrl,
+      file.size
+    );
+
+    if (complete) {
+      return true;
+    }
+
     console.error("Direct Drive upload error:", error);
-    throw error;
+
+    throw new Error(`העלאת ${file.name} נכשלה.`);
   }
 }
 
