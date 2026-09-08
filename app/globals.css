@@ -199,12 +199,11 @@ main {
 }
 
 .mission-number {
-  font-family: Arial, Helvetica, sans-serif;
   margin: 4px 0 0;
-  font-size: clamp(64px, 16vw, 88px);
-  line-height: 0.88;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(42px, 10vw, 56px);
+  line-height: 1;
   font-weight: 600;
-
   color: var(--burgundy);
 }
 
