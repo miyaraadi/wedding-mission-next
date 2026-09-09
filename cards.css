@@ -1,10 +1,6 @@
 :root {
-  --paper: #f2e2c6;
-  --paper-light: #f8ecd8;
   --burgundy: #6b2329;
-  --burgundy-dark: #4f1b20;
   --brown: #4b3027;
-  --gold: #9c6e3b;
 }
 
 * {
@@ -20,195 +16,49 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #cdb792;
 }
 
 body {
   font-family: "Noto Serif Hebrew", serif;
+  background: #ddd2c0;
 }
 
-/* =========================
-   CARD
-========================= */
+/* ===== CARD ===== */
 
 .mission-card {
   width: 120mm;
   height: 180mm;
+
   position: relative;
   overflow: hidden;
 
   page-break-after: always;
   break-after: page;
 
+  background-image: url("/card-background.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
   color: var(--brown);
-
-  background:
-    radial-gradient(
-      circle at 20% 15%,
-      rgba(255,255,255,.35),
-      transparent 24%
-    ),
-    radial-gradient(
-      circle at 80% 78%,
-      rgba(120,70,30,.05),
-      transparent 30%
-    ),
-    repeating-radial-gradient(
-      circle at 50% 50%,
-      rgba(80,40,20,.018) 0,
-      rgba(80,40,20,.018) .4px,
-      transparent .8px,
-      transparent 2.5px
-    ),
-    linear-gradient(
-      135deg,
-      var(--paper-light),
-      var(--paper)
-    );
 }
 
-/* =========================
-   DOUBLE FRAME
-========================= */
-
-.frame {
-  position: absolute;
-  pointer-events: none;
-}
-
-.frame.outer {
-  inset: 4.2mm;
-  border: .55mm solid var(--burgundy);
-}
-
-.frame.inner {
-  inset: 6.1mm;
-  border: .22mm solid var(--burgundy);
-}
-
-/* =========================
-   ORNATE CORNERS
-========================= */
-
+/* מבטלים את המסגרת והפינות הישנות */
+.frame,
 .corner {
-  position: absolute;
-  width: 25mm;
-  height: 25mm;
-  z-index: 4;
-  color: var(--burgundy);
+  display: none;
 }
 
-.corner::before {
-  content: "❦";
-  position: absolute;
-
-  font-family: Georgia, serif;
-  font-size: 26pt;
-  line-height: 1;
-
-  color: var(--burgundy);
-
-  transform: rotate(-40deg);
-}
-
-.corner::after {
-  content: "";
-
-  position: absolute;
-  width: 17mm;
-  height: 17mm;
-
-  border-top: .45mm solid var(--burgundy);
-  border-left: .45mm solid var(--burgundy);
-
-  border-top-left-radius: 13mm;
-}
-
-/* TOP LEFT */
-
-.tl {
-  top: 5mm;
-  left: 5mm;
-}
-
-.tl::before {
-  top: -1mm;
-  left: -1mm;
-}
-
-.tl::after {
-  top: 5mm;
-  left: 5mm;
-}
-
-/* TOP RIGHT */
-
-.tr {
-  top: 5mm;
-  right: 5mm;
-  transform: scaleX(-1);
-}
-
-.tr::before {
-  top: -1mm;
-  left: -1mm;
-}
-
-.tr::after {
-  top: 5mm;
-  left: 5mm;
-}
-
-/* BOTTOM LEFT */
-
-.bl {
-  bottom: 5mm;
-  left: 5mm;
-  transform: scaleY(-1);
-}
-
-.bl::before {
-  top: -1mm;
-  left: -1mm;
-}
-
-.bl::after {
-  top: 5mm;
-  left: 5mm;
-}
-
-/* BOTTOM RIGHT */
-
-.br {
-  bottom: 5mm;
-  right: 5mm;
-  transform: scale(-1);
-}
-
-.br::before {
-  top: -1mm;
-  left: -1mm;
-}
-
-.br::after {
-  top: 5mm;
-  left: 5mm;
-}
-
-/* =========================
-   CONTENT
-========================= */
+/* ===== CONTENT ===== */
 
 .content {
   position: relative;
-  z-index: 3;
+  z-index: 2;
 
+  width: 100%;
   height: 100%;
 
-  padding:
-    11mm
-    12mm
-    9mm;
+  padding: 12mm 15mm 9mm;
 
   display: flex;
   flex-direction: column;
@@ -217,41 +67,30 @@ body {
   text-align: center;
 }
 
-/* =========================
-   TOP TITLE
-========================= */
+/* WEDDING MISSION */
 
 .kicker {
   direction: ltr;
 
-  font-family:
-    "Cormorant Garamond",
-    Georgia,
-    serif;
+  margin-top: 1mm;
 
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 15pt;
   font-weight: 500;
-
   letter-spacing: .28em;
 
-  color: var(--burgundy-dark);
-
-  margin-top: 1mm;
+  color: var(--brown);
 }
 
-/* =========================
-   ORNAMENT DIVIDERS
-========================= */
+/* ===== DECORATIVE DIVIDERS ===== */
 
 .divider {
-  width: 46mm;
-  height: 8mm;
-
-  margin:
-    3mm 0
-    2mm;
-
   position: relative;
+
+  width: 44mm;
+  height: 7mm;
+
+  margin: 3mm 0 2mm;
 }
 
 .divider::before,
@@ -259,14 +98,11 @@ body {
   content: "";
 
   position: absolute;
-
   top: 50%;
 
   width: 17mm;
 
-  border-top:
-    .3mm solid
-    var(--burgundy);
+  border-top: .25mm solid var(--burgundy);
 }
 
 .divider::before {
@@ -283,139 +119,81 @@ body {
   left: 50%;
   top: 50%;
 
-  width: 6mm;
-  height: 6mm;
+  width: 4mm;
+  height: 4mm;
+
+  border: .3mm solid var(--burgundy);
 
   transform:
-    translate(-50%, -50%);
-
-  border: none;
+    translate(-50%, -50%)
+    rotate(45deg);
 }
 
-.divider span::before {
-  content: "❦";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  transform:
-    translate(-50%, -52%);
-
-  font-family: Georgia, serif;
-
-  font-size: 20pt;
-
-  color: var(--burgundy);
-}
-
-.divider span::after {
-  display: none;
-}
-
-/* =========================
-   NAMES
-========================= */
+/* ADI & NITAY */
 
 .names {
   direction: ltr;
 
-  font-family:
-    "Cormorant Garamond",
-    Georgia,
-    serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
 
-  font-size: 20pt;
+  font-size: 19pt;
   font-weight: 500;
-
-  letter-spacing: .05em;
-
-  color: var(--burgundy);
+  letter-spacing: .06em;
 
   line-height: 1;
+
+  color: var(--burgundy);
 }
 
-/* =========================
-   DATE
-========================= */
+/* DATE */
 
 .date {
   direction: ltr;
 
   margin-top: 1.5mm;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: 12pt;
-
   letter-spacing: .20em;
 
   color: var(--brown);
 }
 
-/* =========================
-   SECOND DIVIDER
-========================= */
-
 .divider.small {
-  width: 44mm;
-
-  margin-top: 2.5mm;
+  margin-top: 3mm;
   margin-bottom: 3mm;
 }
 
-/* =========================
-   MISSION NUMBER
-========================= */
+/* MISSION NUMBER */
 
 .mission-number {
   direction: ltr;
 
-  font-family:
-    "Cormorant Garamond",
-    Georgia,
-    serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
 
-  font-size: 27pt;
+  font-size: 26pt;
   font-weight: 600;
 
-  letter-spacing: .01em;
+  line-height: 1;
 
   color: var(--burgundy);
-
-  line-height: 1;
 }
-
-/* =========================
-   SMALL LINE
-========================= */
 
 .short-line {
   width: 34mm;
 
-  border-top:
-    .3mm solid
-    var(--burgundy);
+  margin: 4mm 0 4.5mm;
 
-  margin:
-    4mm 0
-    4mm;
+  border-top: .25mm solid var(--burgundy);
 }
 
-/* =========================
-   HEBREW LABEL
-========================= */
+/* המשימה שלכם */
 
 .label {
-  font-family:
-    "Noto Serif Hebrew",
-    serif;
+  font-family: "Noto Serif Hebrew", serif;
 
-  font-size: 18pt;
+  font-size: 17pt;
   font-weight: 700;
 
   color: var(--burgundy);
@@ -423,37 +201,26 @@ body {
   margin-bottom: 2.5mm;
 }
 
-/* =========================
-   MISSION TEXT
-========================= */
+/* MISSION */
 
 .mission-text {
-  width: 92%;
-
-  min-height: 26mm;
+  width: 94%;
+  min-height: 27mm;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-family:
-    "Noto Serif Hebrew",
-    serif;
+  font-family: "Noto Serif Hebrew", serif;
 
-  font-size: 19pt;
+  font-size: 19.5pt;
   font-weight: 500;
-
-  line-height: 1.45;
+  line-height: 1.4;
 
   color: var(--brown);
-
-  padding:
-    0 2mm;
 }
 
-/* =========================
-   QR
-========================= */
+/* ===== QR ===== */
 
 .qr-row {
   direction: ltr;
@@ -461,7 +228,6 @@ body {
   margin-top: 3mm;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -469,146 +235,103 @@ body {
 }
 
 .qr-box {
-  width: 35mm;
-  height: 35mm;
-
-  border:
-    .45mm solid
-    var(--burgundy);
-
-  border-radius: 2mm;
+  width: 34mm;
+  height: 34mm;
 
   display: grid;
   place-items: center;
 
-  background:
-    rgba(255,255,255,.22);
+  padding: 1.7mm;
 
-  padding: 2mm;
+  border: .4mm solid var(--burgundy);
+  border-radius: 2mm;
+
+  background: #fffaf0;
 }
 
 .qr-box img {
+  display: block;
+
   width: 30mm;
   height: 30mm;
-
-  display: block;
 }
 
-/* =========================
-   SIDE QR ORNAMENTS
-========================= */
+/* הקישוטים משני צדי ה-QR */
 
 .side-ornament {
-  width: 8mm;
-  height: 22mm;
-
   position: relative;
+
+  width: 7mm;
+  height: 20mm;
 }
 
 .side-ornament::before {
-  content: "❦";
+  content: "◆";
 
   position: absolute;
-
-  top: 50%;
   left: 50%;
+  top: 50%;
 
-  transform:
-    translate(-50%, -50%)
-    rotate(90deg);
+  transform: translate(-50%, -50%);
 
-  font-family:
-    Georgia,
-    serif;
-
-  font-size: 20pt;
+  font-size: 9pt;
 
   color: var(--burgundy);
 }
 
-.side-ornament.right {
-  transform: scaleX(-1);
-}
-
-/* =========================
-   SCAN TEXT
-========================= */
+/* SCAN */
 
 .scan-text {
   margin-top: 3mm;
 
-  font-family:
-    "Noto Serif Hebrew",
-    serif;
+  font-family: "Noto Serif Hebrew", serif;
 
-  font-size: 11pt;
-
+  font-size: 10.5pt;
   line-height: 1.4;
 
   color: var(--brown);
 }
 
-/* =========================
-   FOOTER DIVIDER
-========================= */
+/* BOTTOM */
 
 .footer-divider {
-  width: 37mm;
+  width: 36mm;
 
-  margin-top: 2.5mm;
+  margin-top: 3mm;
   margin-bottom: 1mm;
 }
-
-/* =========================
-   FOOTER
-========================= */
 
 .footer {
   direction: ltr;
 
-  font-family:
-    "Cormorant Garamond",
-    Georgia,
-    serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
 
-  font-size: 12.5pt;
+  font-size: 12pt;
   font-style: italic;
 
   color: var(--brown);
-
-  margin-top: 0;
 }
 
-/* =========================
-   SCREEN PREVIEW
-========================= */
+/* ===== SCREEN ===== */
 
 @media screen {
-
   body {
     display: flex;
     flex-direction: column;
-
     align-items: center;
 
     gap: 24px;
-
     padding: 24px;
   }
 
   .mission-card {
-    box-shadow:
-      0 15px 45px
-      rgba(60,35,20,.25);
+    box-shadow: 0 15px 40px rgba(60, 35, 20, .18);
   }
 }
 
-/* =========================
-   PRINT
-========================= */
+/* ===== PRINT ===== */
 
 @media print {
-
   html,
   body {
     background: white;
@@ -616,7 +339,6 @@ body {
 
   body {
     display: block;
-
     padding: 0;
   }
 
