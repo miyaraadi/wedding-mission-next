@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node generate-cards.js && next build",
     "start": "next start",
     "cards": "node generate-cards.js"
   },
