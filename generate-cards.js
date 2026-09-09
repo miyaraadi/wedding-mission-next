@@ -34,7 +34,7 @@ async function createCard(missionId, missionText) {
     width: 700,
     color: {
       dark: "#6b2329",
-      light: "#f8f1e5",
+      light: "#ddd2c0",
     },
   });
 
