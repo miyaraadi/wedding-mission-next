@@ -224,92 +224,40 @@ body {
 
 .qr-row {
   direction: ltr;
-
   margin-top: 3mm;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 5mm;
 }
 
 .qr-box {
-  width: 34mm;
-  height: 34mm;
+  width: 31mm;
+  height: 31mm;
 
   display: grid;
   place-items: center;
 
-  padding: 1.7mm;
+  padding: 0;
 
-  border: .4mm solid var(--burgundy);
-  border-radius: 2mm;
+  border: none;
+  border-radius: 0;
 
-  background: #fffaf0;
+  background: transparent;
 }
 
 .qr-box img {
   display: block;
 
-  width: 30mm;
-  height: 30mm;
+  width: 31mm;
+  height: 31mm;
+
+  background: transparent;
 }
 
-/* הקישוטים משני צדי ה-QR */
-
+/* מבטל לגמרי את הקישוטים משני הצדדים */
 .side-ornament {
-  position: relative;
-
-  width: 7mm;
-  height: 20mm;
-}
-
-.side-ornament::before {
-  content: "◆";
-
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  transform: translate(-50%, -50%);
-
-  font-size: 9pt;
-
-  color: var(--burgundy);
-}
-
-/* SCAN */
-
-.scan-text {
-  margin-top: 3mm;
-
-  font-family: "Noto Serif Hebrew", serif;
-
-  font-size: 10.5pt;
-  line-height: 1.4;
-
-  color: var(--brown);
-}
-
-/* BOTTOM */
-
-.footer-divider {
-  width: 36mm;
-
-  margin-top: 3mm;
-  margin-bottom: 1mm;
-}
-
-.footer {
-  direction: ltr;
-
-  font-family: "Cormorant Garamond", Georgia, serif;
-
-  font-size: 12pt;
-  font-style: italic;
-
-  color: var(--brown);
+  display: none;
 }
 
 /* ===== SCREEN ===== */
