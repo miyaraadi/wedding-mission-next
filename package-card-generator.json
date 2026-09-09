@@ -1,0 +1,11 @@
+{
+  "name": "wedding-card-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate": "node generate-cards.js"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
