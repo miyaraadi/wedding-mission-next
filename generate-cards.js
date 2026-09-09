@@ -28,15 +28,15 @@ function escapeHtml(text) {
 async function createCard(missionId, missionText) {
   const url = `${BASE_URL}${missionId}`;
 
-  const qr = await QRCode.toDataURL(url, {
-    errorCorrectionLevel: "M",
-    margin: 1,
-    width: 700,
-    color: {
-      dark: "#6b2329",
-      light: "#ddd2c0",
-    },
-  });
+const qr = await QRCode.toDataURL(url, {
+  errorCorrectionLevel: "M",
+  margin: 1,
+  width: 700,
+  color: {
+    dark: "#6b2329",
+    light: "#00000000",
+  },
+});
 
   return `
 <section class="mission-card">
