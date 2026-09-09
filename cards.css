@@ -1,43 +1,75 @@
 :root {
-  --paper: #efe1c7;
-  --paper2: #f5ead8;
-  --burgundy: #742b32;
-  --burgundy-dark: #512126;
-  --brown: #4b342d;
-  --gold: #9b7444;
+  --paper: #f2e2c6;
+  --paper-light: #f8ecd8;
+  --burgundy: #6b2329;
+  --burgundy-dark: #4f1b20;
+  --brown: #4b3027;
+  --gold: #9c6e3b;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 @page {
   size: 120mm 180mm;
   margin: 0;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-  background: #d4c0a2;
+  background: #cdb792;
 }
 
 body {
   font-family: "Noto Serif Hebrew", serif;
 }
 
+/* =========================
+   CARD
+========================= */
+
 .mission-card {
   width: 120mm;
   height: 180mm;
   position: relative;
+  overflow: hidden;
+
   page-break-after: always;
   break-after: page;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(255,255,255,.22), transparent 22%),
-    radial-gradient(circle at 80% 80%, rgba(116,43,50,.045), transparent 20%),
-    linear-gradient(135deg, rgba(255,255,255,.08), rgba(90,55,30,.02)),
-    var(--paper);
+
   color: var(--brown);
+
+  background:
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(255,255,255,.35),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 80% 78%,
+      rgba(120,70,30,.05),
+      transparent 30%
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      rgba(80,40,20,.018) 0,
+      rgba(80,40,20,.018) .4px,
+      transparent .8px,
+      transparent 2.5px
+    ),
+    linear-gradient(
+      135deg,
+      var(--paper-light),
+      var(--paper)
+    );
 }
+
+/* =========================
+   DOUBLE FRAME
+========================= */
 
 .frame {
   position: absolute;
@@ -45,255 +77,549 @@ body {
 }
 
 .frame.outer {
-  inset: 5.5mm;
+  inset: 4.2mm;
   border: .55mm solid var(--burgundy);
 }
 
 .frame.inner {
-  inset: 7.2mm;
-  border: .22mm solid var(--gold);
+  inset: 6.1mm;
+  border: .22mm solid var(--burgundy);
 }
+
+/* =========================
+   ORNATE CORNERS
+========================= */
 
 .corner {
   position: absolute;
-  width: 20mm;
-  height: 20mm;
-  z-index: 2;
-}
-
-.corner::before,
-.corner::after {
-  content: "";
-  position: absolute;
-  border-color: var(--burgundy);
+  width: 25mm;
+  height: 25mm;
+  z-index: 4;
+  color: var(--burgundy);
 }
 
 .corner::before {
-  width: 14mm;
-  height: 8mm;
-  border-top: .45mm solid var(--burgundy);
-  border-left: .45mm solid var(--burgundy);
-  border-top-left-radius: 9mm;
+  content: "❦";
+  position: absolute;
+
+  font-family: Georgia, serif;
+  font-size: 26pt;
+  line-height: 1;
+
+  color: var(--burgundy);
+
+  transform: rotate(-40deg);
 }
 
 .corner::after {
-  width: 8mm;
-  height: 14mm;
-  border-top: .22mm solid var(--gold);
-  border-left: .22mm solid var(--gold);
-  border-top-left-radius: 7mm;
-  left: 2.2mm;
-  top: 2.2mm;
+  content: "";
+
+  position: absolute;
+  width: 17mm;
+  height: 17mm;
+
+  border-top: .45mm solid var(--burgundy);
+  border-left: .45mm solid var(--burgundy);
+
+  border-top-left-radius: 13mm;
 }
 
-.tl { top: 7.2mm; left: 7.2mm; }
-.tr { top: 7.2mm; right: 7.2mm; transform: scaleX(-1); }
-.bl { bottom: 7.2mm; left: 7.2mm; transform: scaleY(-1); }
-.br { bottom: 7.2mm; right: 7.2mm; transform: scale(-1); }
+/* TOP LEFT */
+
+.tl {
+  top: 5mm;
+  left: 5mm;
+}
+
+.tl::before {
+  top: -1mm;
+  left: -1mm;
+}
+
+.tl::after {
+  top: 5mm;
+  left: 5mm;
+}
+
+/* TOP RIGHT */
+
+.tr {
+  top: 5mm;
+  right: 5mm;
+  transform: scaleX(-1);
+}
+
+.tr::before {
+  top: -1mm;
+  left: -1mm;
+}
+
+.tr::after {
+  top: 5mm;
+  left: 5mm;
+}
+
+/* BOTTOM LEFT */
+
+.bl {
+  bottom: 5mm;
+  left: 5mm;
+  transform: scaleY(-1);
+}
+
+.bl::before {
+  top: -1mm;
+  left: -1mm;
+}
+
+.bl::after {
+  top: 5mm;
+  left: 5mm;
+}
+
+/* BOTTOM RIGHT */
+
+.br {
+  bottom: 5mm;
+  right: 5mm;
+  transform: scale(-1);
+}
+
+.br::before {
+  top: -1mm;
+  left: -1mm;
+}
+
+.br::after {
+  top: 5mm;
+  left: 5mm;
+}
+
+/* =========================
+   CONTENT
+========================= */
 
 .content {
   position: relative;
   z-index: 3;
+
   height: 100%;
-  padding: 12mm 14mm 9mm;
+
+  padding:
+    11mm
+    12mm
+    9mm;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   text-align: center;
 }
 
+/* =========================
+   TOP TITLE
+========================= */
+
 .kicker {
   direction: ltr;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 14pt;
-  letter-spacing: .23em;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 15pt;
+  font-weight: 500;
+
+  letter-spacing: .28em;
+
   color: var(--burgundy-dark);
-  margin-top: 1.5mm;
+
+  margin-top: 1mm;
 }
 
+/* =========================
+   ORNAMENT DIVIDERS
+========================= */
+
 .divider {
-  width: 45mm;
-  height: 7mm;
-  margin: 3.2mm 0 2.5mm;
+  width: 46mm;
+  height: 8mm;
+
+  margin:
+    3mm 0
+    2mm;
+
   position: relative;
 }
 
 .divider::before,
 .divider::after {
   content: "";
+
   position: absolute;
+
   top: 50%;
+
   width: 17mm;
-  border-top: .28mm solid var(--gold);
+
+  border-top:
+    .3mm solid
+    var(--burgundy);
 }
-.divider::before { left: 0; }
-.divider::after { right: 0; }
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
 .divider span {
   position: absolute;
+
   left: 50%;
   top: 50%;
-  width: 4.4mm;
-  height: 4.4mm;
-  border: .25mm solid var(--gold);
-  transform: translate(-50%,-50%) rotate(45deg);
+
+  width: 6mm;
+  height: 6mm;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: none;
 }
-.divider span::after {
-  content: "";
+
+.divider span::before {
+  content: "❦";
+
   position: absolute;
-  width: 1.2mm;
-  height: 1.2mm;
-  border-radius: 50%;
-  background: var(--gold);
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -52%);
+
+  font-family: Georgia, serif;
+
+  font-size: 20pt;
+
+  color: var(--burgundy);
 }
+
+.divider span::after {
+  display: none;
+}
+
+/* =========================
+   NAMES
+========================= */
 
 .names {
   direction: ltr;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 28pt;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 20pt;
   font-weight: 500;
+
+  letter-spacing: .05em;
+
   color: var(--burgundy);
+
   line-height: 1;
 }
+
+/* =========================
+   DATE
+========================= */
 
 .date {
   direction: ltr;
-  margin-top: 2mm;
-  font-family: "Playfair Display", serif;
-  font-size: 14pt;
-  letter-spacing: .08em;
+
+  margin-top: 1.5mm;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 12pt;
+
+  letter-spacing: .20em;
+
   color: var(--brown);
 }
 
+/* =========================
+   SECOND DIVIDER
+========================= */
+
 .divider.small {
-  width: 40mm;
-  margin-top: 3.4mm;
-  margin-bottom: 4mm;
-}
+  width: 44mm;
 
-.mission-number {
-  direction: ltr;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 32pt;
-  font-weight: 600;
-  color: var(--burgundy);
-  line-height: 1;
-}
-
-.short-line {
-  width: 34mm;
-  border-top: .28mm solid var(--gold);
-  margin: 4.3mm 0 5.2mm;
-}
-
-.label {
-  font-family: "Noto Serif Hebrew", serif;
-  font-size: 17pt;
-  font-weight: 700;
-  color: var(--burgundy);
+  margin-top: 2.5mm;
   margin-bottom: 3mm;
 }
 
+/* =========================
+   MISSION NUMBER
+========================= */
+
+.mission-number {
+  direction: ltr;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 27pt;
+  font-weight: 600;
+
+  letter-spacing: .01em;
+
+  color: var(--burgundy);
+
+  line-height: 1;
+}
+
+/* =========================
+   SMALL LINE
+========================= */
+
+.short-line {
+  width: 34mm;
+
+  border-top:
+    .3mm solid
+    var(--burgundy);
+
+  margin:
+    4mm 0
+    4mm;
+}
+
+/* =========================
+   HEBREW LABEL
+========================= */
+
+.label {
+  font-family:
+    "Noto Serif Hebrew",
+    serif;
+
+  font-size: 18pt;
+  font-weight: 700;
+
+  color: var(--burgundy);
+
+  margin-bottom: 2.5mm;
+}
+
+/* =========================
+   MISSION TEXT
+========================= */
+
 .mission-text {
-  width: 95%;
-  min-height: 27mm;
+  width: 92%;
+
+  min-height: 26mm;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Noto Serif Hebrew", serif;
-  font-size: 19.5pt;
+
+  font-family:
+    "Noto Serif Hebrew",
+    serif;
+
+  font-size: 19pt;
   font-weight: 500;
-  line-height: 1.35;
+
+  line-height: 1.45;
+
   color: var(--brown);
+
+  padding:
+    0 2mm;
 }
+
+/* =========================
+   QR
+========================= */
 
 .qr-row {
   direction: ltr;
-  margin-top: 4mm;
+
+  margin-top: 3mm;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 5mm;
 }
 
 .qr-box {
-  width: 38mm;
-  height: 38mm;
-  border: .45mm solid var(--burgundy);
-  border-radius: 2.2mm;
+  width: 35mm;
+  height: 35mm;
+
+  border:
+    .45mm solid
+    var(--burgundy);
+
+  border-radius: 2mm;
+
   display: grid;
   place-items: center;
-  background: rgba(255,255,255,.25);
+
+  background:
+    rgba(255,255,255,.22);
+
   padding: 2mm;
 }
 
 .qr-box img {
-  width: 33mm;
-  height: 33mm;
+  width: 30mm;
+  height: 30mm;
+
   display: block;
 }
+
+/* =========================
+   SIDE QR ORNAMENTS
+========================= */
 
 .side-ornament {
   width: 8mm;
   height: 22mm;
+
   position: relative;
 }
+
 .side-ornament::before {
-  content: "❧";
+  content: "❦";
+
   position: absolute;
+
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  font-family: serif;
-  font-size: 22pt;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(90deg);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 20pt;
+
   color: var(--burgundy);
 }
-.side-ornament.right { transform: scaleX(-1); }
+
+.side-ornament.right {
+  transform: scaleX(-1);
+}
+
+/* =========================
+   SCAN TEXT
+========================= */
 
 .scan-text {
-  margin-top: 4.2mm;
-  font-size: 11.5pt;
-  line-height: 1.35;
+  margin-top: 3mm;
+
+  font-family:
+    "Noto Serif Hebrew",
+    serif;
+
+  font-size: 11pt;
+
+  line-height: 1.4;
+
   color: var(--brown);
 }
 
+/* =========================
+   FOOTER DIVIDER
+========================= */
+
 .footer-divider {
-  width: 35mm;
-  margin-top: 3.5mm;
-  margin-bottom: 2mm;
+  width: 37mm;
+
+  margin-top: 2.5mm;
+  margin-bottom: 1mm;
 }
+
+/* =========================
+   FOOTER
+========================= */
 
 .footer {
   direction: ltr;
-  margin-top: 0;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 12pt;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 12.5pt;
   font-style: italic;
+
   color: var(--brown);
+
+  margin-top: 0;
 }
 
+/* =========================
+   SCREEN PREVIEW
+========================= */
+
 @media screen {
+
   body {
     display: flex;
     flex-direction: column;
+
     align-items: center;
+
     gap: 24px;
+
     padding: 24px;
   }
+
   .mission-card {
-    box-shadow: 0 16px 40px rgba(60,35,20,.18);
+    box-shadow:
+      0 15px 45px
+      rgba(60,35,20,.25);
   }
 }
 
+/* =========================
+   PRINT
+========================= */
+
 @media print {
-  html, body {
+
+  html,
+  body {
     background: white;
   }
+
   body {
     display: block;
+
     padding: 0;
   }
+
   .mission-card {
     box-shadow: none;
   }
