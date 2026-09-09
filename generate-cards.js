@@ -12,6 +12,11 @@ const missions = JSON.parse(
   )
 );
 
+const css = fs.readFileSync(
+  path.join(__dirname, "cards.css"),
+  "utf8"
+);
+
 function escapeHtml(text) {
   return String(text)
     .replaceAll("&", "&amp;")
@@ -25,89 +30,92 @@ async function createCard(missionId, missionText) {
 
   const qr = await QRCode.toDataURL(url, {
     errorCorrectionLevel: "M",
-    margin: 2,
+    margin: 1,
     width: 700,
     color: {
-      dark: "#351a1f",
-      light: "#f4e5cb",
+      dark: "#512126",
+      light: "#efe1c7",
     },
   });
 
   return `
-    <section class="mission-card">
+<section class="mission-card">
 
-      <div class="border border-outer"></div>
-      <div class="border border-inner"></div>
+  <div class="frame outer"></div>
+  <div class="frame inner"></div>
 
-      <div class="corner corner-tl">❦</div>
-      <div class="corner corner-tr">❦</div>
-      <div class="corner corner-bl">❦</div>
-      <div class="corner corner-br">❦</div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
 
-      <div class="card-content">
+  <div class="content">
 
-        <div class="top-title">
-          WEDDING MISSION
-        </div>
+    <div class="kicker">
+      WEDDING MISSION
+    </div>
 
-        <div class="ornament">
-          <span></span>
-          <i>◆</i>
-          <span></span>
-        </div>
+    <div class="divider">
+      <span></span>
+    </div>
 
-        <div class="couple-name">
-          ADI &amp; NITAY
-        </div>
+    <div class="names">
+      ADI &amp; NITAY
+    </div>
 
-        <div class="wedding-date">
-          11.03.2027
-        </div>
+    <div class="date">
+      11.03.2027
+    </div>
 
-        <div class="mission-number">
-          MISSION #${missionId}
-        </div>
+    <div class="divider small">
+      <span></span>
+    </div>
 
-        <div class="small-ornament">
-          <span></span>
-          <i>◆</i>
-          <span></span>
-        </div>
+    <div class="mission-number">
+      MISSION #${missionId}
+    </div>
 
-        <div class="mission-label">
-          המשימה שלכם
-        </div>
+    <div class="short-line"></div>
 
-        <div class="mission-text">
-          ${escapeHtml(missionText)}
-        </div>
+    <div class="label">
+      המשימה שלכם:
+    </div>
 
-        <div class="qr-frame">
-          <img
-            src="${qr}"
-            alt="QR למשימה ${missionId}"
-          />
-        </div>
+    <div class="mission-text">
+      ${escapeHtml(missionText)}
+    </div>
 
-        <div class="scan-text">
-          סרקו כדי לפתוח את המשימה ולהעלות
-          <br />
-          <strong>את התמונה או הסרטון</strong>
-        </div>
+    <div class="qr-row">
 
-        <div class="bottom-ornament">
-          <span></span>
-          <i>◆</i>
-          <span></span>
-        </div>
+      <div class="side-ornament"></div>
 
-        <div class="footer-text">
-          Keep the memory. Complete the mission.
-        </div>
-
+      <div class="qr-box">
+        <img
+          src="${qr}"
+          alt="Mission ${missionId}"
+        />
       </div>
-    </section>
-  `;
+
+      <div class="side-ornament right"></div>
+
+    </div>
+
+    <div class="scan-text">
+      סרקו כדי להעלות את התמונה או הסרטון
+    </div>
+
+    <div class="divider footer-divider">
+      <span></span>
+    </div>
+
+    <div class="footer">
+      Keep the memory. Complete the mission.
+    </div>
+
+  </div>
+
+</section>
+`;
 }
 
 async function generate() {
@@ -115,15 +123,11 @@ async function generate() {
 
   const ids = Object.keys(missions).sort();
 
-  for (const missionId of ids) {
-    console.log(`Creating mission ${missionId}...`);
-
-    const card = await createCard(
-      missionId,
-      missions[missionId]
+  for (const id of ids) {
+    console.log(`Creating mission ${id}`);
+    cards.push(
+      await createCard(id, missions[id])
     );
-
-    cards.push(card);
   }
 
   const html = `
@@ -131,64 +135,61 @@ async function generate() {
 <html lang="he" dir="rtl">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1"
-  />
+  >
 
-  <title>
-    ADI & NITAY — Wedding Missions
-  </title>
+  <title>ADI & NITAY Wedding Missions</title>
 
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
-  />
+  >
 
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
     crossorigin
-  />
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Hebrew:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
     rel="stylesheet"
-  />
+  >
 
-  <link
-    rel="stylesheet"
-    href="cards.css"
-  />
+  <style>
+    ${css}
+  </style>
+
 </head>
 
 <body>
 
-  <main class="cards-container">
-    ${cards.join("\n")}
-  </main>
+  ${cards.join("\n")}
 
 </body>
 
 </html>
-  `;
+`;
+
+  const publicDir = path.join(__dirname, "public");
+
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+  }
 
   fs.writeFileSync(
-    path.join(__dirname, "all-cards.html"),
+    path.join(publicDir, "all-cards.html"),
     html,
     "utf8"
   );
 
   console.log("");
-  console.log("✓ Finished");
-  console.log(
-    `${ids.length} wedding mission cards created.`
-  );
-  console.log(
-    "Open all-cards.html in your browser."
-  );
+  console.log(`✓ Created ${ids.length} cards`);
+  console.log("✓ public/all-cards.html");
 }
 
 generate().catch((error) => {
