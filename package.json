@@ -8,11 +8,13 @@
     "start": "next start",
     "cards": "node generate-cards.js"
   },
-  "dependencies": {
-    "googleapis": "^144.0.0",
-    "next": "^15.5.0",
-    "qrcode": "^1.5.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  }
+"dependencies": {
+  "@pdf-lib/fontkit": "^1.1.1",
+  "googleapis": "^144.0.0",
+  "next": "^15.5.0",
+  "pdf-lib": "^1.17.1",
+  "qrcode": "^1.5.4",
+  "react": "^19.1.0",
+  "react-dom": "^19.1.0"
+}
 }
