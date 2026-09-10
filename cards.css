@@ -40,7 +40,7 @@ body {
   color: var(--brown);
 }
 
-/* כל האלמנטים הגרפיים כבר נמצאים ברקע */
+/* כל הקישוטים כבר ברקע */
 .frame,
 .corner,
 .divider,
@@ -60,13 +60,13 @@ body {
 /* WEDDING MISSION */
 .kicker {
   position: absolute;
-  top: 13mm;
+  top: 14mm;
   left: 0;
   width: 100%;
 
   direction: ltr;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 15pt;
+  font-size: 14.5pt;
   font-weight: 500;
   letter-spacing: .28em;
 
@@ -76,15 +76,15 @@ body {
 /* ADI & NITAY */
 .names {
   position: absolute;
-  top: 30mm;
+  top: 29mm;
   left: 0;
   width: 100%;
 
   direction: ltr;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 22pt;
+  font-size: 21pt;
   font-weight: 500;
-  letter-spacing: .05em;
+  letter-spacing: .04em;
 
   color: var(--burgundy);
 }
@@ -92,13 +92,13 @@ body {
 /* DATE */
 .date {
   position: absolute;
-  top: 40mm;
+  top: 39mm;
   left: 0;
   width: 100%;
 
   direction: ltr;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: 12pt;
+  font-size: 11.5pt;
   letter-spacing: .20em;
 
   color: var(--brown);
@@ -107,14 +107,15 @@ body {
 /* MISSION NUMBER */
 .mission-number {
   position: absolute;
-  top: 56mm;
+  top: 57mm;
   left: 0;
   width: 100%;
 
   direction: ltr;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 27pt;
+  font-size: 26pt;
   font-weight: 600;
+  line-height: 1;
 
   color: var(--burgundy);
 }
@@ -122,12 +123,12 @@ body {
 /* המשימה שלכם */
 .label {
   position: absolute;
-  top: 73mm;
+  top: 72mm;
   left: 0;
   width: 100%;
 
   font-family: "Noto Serif Hebrew", serif;
-  font-size: 17pt;
+  font-size: 16.5pt;
   font-weight: 700;
 
   color: var(--burgundy);
@@ -136,18 +137,20 @@ body {
 /* טקסט המשימה */
 .mission-text {
   position: absolute;
-  top: 82mm;
-  left: 12mm;
+  top: 81mm;
+  left: 11mm;
 
-  width: 96mm;
+  width: 98mm;
   min-height: 22mm;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  padding: 0 2mm;
+
   font-family: "Noto Serif Hebrew", serif;
-  font-size: 19pt;
+  font-size: 18.5pt;
   font-weight: 500;
   line-height: 1.4;
 
@@ -157,8 +160,7 @@ body {
 /* QR */
 .qr-row {
   position: absolute;
-
-  top: 108mm;
+  top: 106mm;
   left: 0;
 
   width: 100%;
@@ -170,10 +172,9 @@ body {
   margin: 0;
 }
 
-/* אין קופסה - המסגרת כבר ברקע */
 .qr-box {
-  width: 32mm;
-  height: 32mm;
+  width: 31mm;
+  height: 31mm;
 
   display: flex;
   align-items: center;
@@ -188,35 +189,33 @@ body {
 }
 
 .qr-box img {
-  width: 29mm;
-  height: 29mm;
+  width: 28.5mm;
+  height: 28.5mm;
 
   display: block;
 
   background: transparent;
 }
 
-/* טקסט מתחת ל-QR */
+/* סרקו... */
 .scan-text {
   position: absolute;
-
-  top: 143mm;
+  top: 140mm;
   left: 0;
 
   width: 100%;
 
   font-family: "Noto Serif Hebrew", serif;
-  font-size: 10.5pt;
-  line-height: 1.4;
+  font-size: 10pt;
+  line-height: 1.35;
 
   color: var(--brown);
 }
 
-/* שורת סיום */
+/* FOOTER */
 .footer {
   position: absolute;
-
-  top: 163mm;
+  top: 161mm;
   left: 0;
 
   width: 100%;
@@ -224,7 +223,7 @@ body {
   direction: ltr;
 
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 12.5pt;
+  font-size: 12pt;
   font-style: italic;
 
   color: var(--brown);
