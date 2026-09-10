@@ -33,7 +33,6 @@ body {
   break-after: page;
 
   background-color: #fef9eb;
-
   background-image: url("/card-background.png");
   background-size: 120mm 180mm;
   background-repeat: no-repeat;
@@ -42,7 +41,7 @@ body {
   color: var(--brown);
 }
 
-/* כל הקישוטים כבר ברקע */
+/* כל האלמנטים הגרפיים כבר נמצאים ברקע */
 .frame,
 .corner,
 .divider,
@@ -109,13 +108,13 @@ body {
 /* MISSION NUMBER */
 .mission-number {
   position: absolute;
-  top: 57mm;
+  top: 61mm;
   left: 0;
   width: 100%;
 
   direction: ltr;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 26pt;
+  font-size: 25pt;
   font-weight: 600;
   line-height: 1;
 
@@ -125,7 +124,7 @@ body {
 /* המשימה שלכם */
 .label {
   position: absolute;
-  top: 72mm;
+  top: 74mm;
   left: 0;
   width: 100%;
 
@@ -139,7 +138,7 @@ body {
 /* טקסט המשימה */
 .mission-text {
   position: absolute;
-  top: 81mm;
+  top: 83mm;
   left: 11mm;
 
   width: 98mm;
@@ -162,7 +161,7 @@ body {
 /* QR */
 .qr-row {
   position: absolute;
-  top: 106mm;
+  top: 104mm;
   left: 0;
 
   width: 100%;
@@ -175,8 +174,8 @@ body {
 }
 
 .qr-box {
-  width: 31mm;
-  height: 31mm;
+  width: 34mm;
+  height: 34mm;
 
   display: flex;
   align-items: center;
@@ -191,18 +190,17 @@ body {
 }
 
 .qr-box img {
-  width: 28.5mm;
-  height: 28.5mm;
+  width: 32.5mm;
+  height: 32.5mm;
 
   display: block;
-
   background: transparent;
 }
 
-/* סרקו... */
+/* טקסט מתחת ל-QR */
 .scan-text {
   position: absolute;
-  top: 140mm;
+  top: 139mm;
   left: 0;
 
   width: 100%;
@@ -217,7 +215,7 @@ body {
 /* FOOTER */
 .footer {
   position: absolute;
-  top: 161mm;
+  top: 160mm;
   left: 0;
 
   width: 100%;
@@ -236,7 +234,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     gap: 24px;
     padding: 24px;
   }
