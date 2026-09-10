@@ -28,7 +28,6 @@ body {
 .mission-card {
   width: 120mm;
   height: 180mm;
-
   position: relative;
   overflow: hidden;
 
@@ -36,9 +35,10 @@ body {
   break-after: page;
 
   background-image: url("/card-background.png");
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #fdf6e8;
 
   color: var(--brown);
 }
