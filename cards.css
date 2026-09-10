@@ -41,7 +41,6 @@ body {
   color: var(--brown);
 }
 
-/* כל האלמנטים הגרפיים כבר נמצאים ברקע */
 .frame,
 .corner,
 .divider,
@@ -108,7 +107,7 @@ body {
 /* MISSION NUMBER */
 .mission-number {
   position: absolute;
-  top: 61mm;
+  top: 52mm;
   left: 0;
   width: 100%;
 
@@ -124,7 +123,7 @@ body {
 /* המשימה שלכם */
 .label {
   position: absolute;
-  top: 74mm;
+  top: 70mm;
   left: 0;
   width: 100%;
 
@@ -138,7 +137,7 @@ body {
 /* טקסט המשימה */
 .mission-text {
   position: absolute;
-  top: 83mm;
+  top: 79mm;
   left: 11mm;
 
   width: 98mm;
@@ -161,7 +160,7 @@ body {
 /* QR */
 .qr-row {
   position: absolute;
-  top: 104mm;
+  top: 103mm;
   left: 0;
 
   width: 100%;
@@ -174,8 +173,8 @@ body {
 }
 
 .qr-box {
-  width: 34mm;
-  height: 34mm;
+  width: 35mm;
+  height: 35mm;
 
   display: flex;
   align-items: center;
@@ -185,22 +184,21 @@ body {
   margin: 0;
 
   border: none;
-  border-radius: 0;
   background: transparent;
 }
 
 .qr-box img {
-  width: 32.5mm;
-  height: 32.5mm;
+  width: 33.5mm;
+  height: 33.5mm;
 
   display: block;
   background: transparent;
 }
 
-/* טקסט מתחת ל-QR */
+/* SCAN TEXT */
 .scan-text {
   position: absolute;
-  top: 139mm;
+  top: 140mm;
   left: 0;
 
   width: 100%;
@@ -215,13 +213,12 @@ body {
 /* FOOTER */
 .footer {
   position: absolute;
-  top: 160mm;
+  top: 161mm;
   left: 0;
 
   width: 100%;
 
   direction: ltr;
-
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 12pt;
   font-style: italic;
