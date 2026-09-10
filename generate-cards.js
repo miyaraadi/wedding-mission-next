@@ -1,6 +1,34 @@
 const fs = require("fs");
 const path = require("path");
 const QRCode = require("qrcode");
+const { PDFDocument, rgb } = require("pdf-lib");
+const fontkit = require("@pdf-lib/fontkit");
+
+const TEMPLATE_PATH = path.join(
+  __dirname,
+  "public",
+  "mission-template.pdf"
+);
+
+const BOOKMAN_PATH = path.join(
+  __dirname,
+  "public",
+  "fonts",
+  "BOOKOS.TTF"
+);
+
+const GISHA_PATH = path.join(
+  __dirname,
+  "public",
+  "fonts",
+  "GISHA.TTF"
+);
+
+const OUTPUT_PATH = path.join(
+  __dirname,
+  "public",
+  "mission-001-test.pdf"
+);
 
 const BASE_URL =
   "https://wedding-mission-next-omega.vercel.app/?mission=";
@@ -12,187 +40,200 @@ const missions = JSON.parse(
   )
 );
 
-const css = fs.readFileSync(
-  path.join(__dirname, "cards.css"),
-  "utf8"
+/*
+  צבעים
+*/
+const BURGUNDY = rgb(
+  122 / 255,
+  30 / 255,
+  42 / 255
 );
 
-function escapeHtml(text) {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+const CREAM = rgb(
+  253 / 255,
+  249 / 255,
+  238 / 255
+);
+
+function mm(value) {
+  return value * 72 / 25.4;
 }
 
-async function createCard(missionId, missionText) {
-  const url = `${BASE_URL}${missionId}`;
-
-const qr = await QRCode.toDataURL(url, {
-  errorCorrectionLevel: "M",
-  margin: 1,
-  width: 700,
-  color: {
-    dark: "#6b2329",
-    light: "#00000000",
-  },
-});
-
-  return `
-<section class="mission-card">
-
-  <div class="frame outer"></div>
-  <div class="frame inner"></div>
-
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
-
-  <div class="content">
-
-    <div class="kicker">
-      WEDDING MISSION
-    </div>
-
-    <div class="divider">
-      <span></span>
-    </div>
-
-    <div class="names">
-      ADI &amp; NITAY
-    </div>
-
-    <div class="date">
-      11.03.2027
-    </div>
-
-    <div class="divider small">
-      <span></span>
-    </div>
-
-    <div class="mission-number">
-      MISSION #${missionId}
-    </div>
-
-    <div class="short-line"></div>
-
-    <div class="label">
-      המשימה שלכם:
-    </div>
-
-    <div class="mission-text">
-      ${escapeHtml(missionText)}
-    </div>
-
-    <div class="qr-row">
-
-      <div class="side-ornament"></div>
-
-      <div class="qr-box">
-        <img
-          src="${qr}"
-          alt="Mission ${missionId}"
-        />
-      </div>
-
-      <div class="side-ornament right"></div>
-
-    </div>
-
-    <div class="scan-text">
-      סרקו כדי להעלות את התמונה או הסרטון
-    </div>
-
-    <div class="divider footer-divider">
-      <span></span>
-    </div>
-
-    <div class="footer">
-      Keep the memory. Complete the mission.
-    </div>
-
-  </div>
-
-</section>
-`;
+/*
+  pdf-lib כותב משמאל לימין.
+  לכן בשביל עברית הופכים את סדר התווים לצורך הצגה.
+*/
+function rtl(text) {
+  return Array.from(text).reverse().join("");
 }
 
-async function generate() {
-  const cards = [];
+async function createMission001() {
+  const missionId = "001";
+  const missionText = missions[missionId];
 
-  const ids = Object.keys(missions).sort();
-
-  for (const id of ids) {
-    console.log(`Creating mission ${id}`);
-    cards.push(
-      await createCard(id, missions[id])
-    );
+  if (!missionText) {
+    throw new Error("Mission 001 not found in missions.json");
   }
 
-  const html = `
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
+  /*
+    טוענים את תבנית ה-PDF
+  */
+  const templateBytes = fs.readFileSync(TEMPLATE_PATH);
 
-<head>
-  <meta charset="UTF-8">
+  const pdfDoc = await PDFDocument.load(templateBytes);
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
+  pdfDoc.registerFontkit(fontkit);
 
-  <title>ADI & NITAY Wedding Missions</title>
+  /*
+    טוענים פונטים
+  */
+  const bookmanBytes = fs.readFileSync(BOOKMAN_PATH);
+  const gishaBytes = fs.readFileSync(GISHA_PATH);
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Hebrew:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    ${css}
-  </style>
-
-</head>
-
-<body>
-
-  ${cards.join("\n")}
-
-</body>
-
-</html>
-`;
-
-  const publicDir = path.join(__dirname, "public");
-
-  if (!fs.existsSync(publicDir)) {
-    fs.mkdirSync(publicDir);
-  }
-
-  fs.writeFileSync(
-    path.join(publicDir, "all-cards.html"),
-    html,
-    "utf8"
+  const bookmanFont = await pdfDoc.embedFont(
+    bookmanBytes,
+    { subset: true }
   );
 
-  console.log("");
-  console.log(`✓ Created ${ids.length} cards`);
-  console.log("✓ public/all-cards.html");
+  const gishaFont = await pdfDoc.embedFont(
+    gishaBytes,
+    { subset: true }
+  );
+
+  const page = pdfDoc.getPages()[0];
+
+  const { width, height } = page.getSize();
+
+  /*
+    ==========================================
+    1. מספר המשימה
+    ==========================================
+
+    קודם מכסים רק את 379 הקיים בתבנית.
+  */
+
+  page.drawRectangle({
+    x: mm(69),
+    y: height - mm(63.5),
+    width: mm(18),
+    height: mm(8),
+    color: CREAM
+  });
+
+  const numberText = "001";
+
+  const numberSize = 20;
+
+  page.drawText(numberText, {
+    x: mm(69.5),
+    y: height - mm(61.5),
+    size: numberSize,
+    font: bookmanFont,
+    color: BURGUNDY
+  });
+
+  /*
+    ==========================================
+    2. טקסט המשימה
+    ==========================================
+  */
+
+  const visualMission = rtl(missionText);
+
+  let missionFontSize = 15;
+
+  /*
+    אם המשימה ארוכה במיוחד, מקטינים מעט
+  */
+  const maxMissionWidth = mm(88);
+
+  let missionWidth =
+    gishaFont.widthOfTextAtSize(
+      visualMission,
+      missionFontSize
+    );
+
+  while (
+    missionWidth > maxMissionWidth &&
+    missionFontSize > 11
+  ) {
+    missionFontSize -= 0.5;
+
+    missionWidth =
+      gishaFont.widthOfTextAtSize(
+        visualMission,
+        missionFontSize
+      );
+  }
+
+  /*
+    ממורכז אופקית
+  */
+  const missionX =
+    (width - missionWidth) / 2;
+
+  page.drawText(visualMission, {
+    x: missionX,
+    y: height - mm(91),
+    size: missionFontSize,
+    font: gishaFont,
+    color: BURGUNDY
+  });
+
+  /*
+    ==========================================
+    3. QR
+    ==========================================
+  */
+
+  const qrUrl =
+    `${BASE_URL}${missionId}`;
+
+  const qrBuffer =
+    await QRCode.toBuffer(qrUrl, {
+      type: "png",
+      width: 1000,
+      margin: 1,
+      errorCorrectionLevel: "M",
+
+      color: {
+        dark: "#7A1E2AFF",
+        light: "#00000000"
+      }
+    });
+
+  const qrImage =
+    await pdfDoc.embedPng(qrBuffer);
+
+  /*
+    QR בתוך המסגרת שכבר קיימת ב-PDF
+  */
+  const qrSize = mm(32);
+
+  page.drawImage(qrImage, {
+    x: (width - qrSize) / 2,
+    y: height - mm(135),
+    width: qrSize,
+    height: qrSize
+  });
+
+  /*
+    שמירה
+  */
+  const outputBytes =
+    await pdfDoc.save();
+
+  fs.writeFileSync(
+    OUTPUT_PATH,
+    outputBytes
+  );
+
+  console.log(
+    "✓ Created public/mission-001-test.pdf"
+  );
 }
 
-generate().catch((error) => {
+createMission001().catch((error) => {
   console.error(error);
   process.exit(1);
 });
