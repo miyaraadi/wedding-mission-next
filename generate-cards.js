@@ -43,10 +43,20 @@ const missions = JSON.parse(
 /*
   צבעים
 */
+
 const BURGUNDY = rgb(
   122 / 255,
   30 / 255,
   42 / 255
+);
+
+/*
+  זהב של MISSION #
+*/
+const GOLD = rgb(
+  196 / 255,
+  161 / 255,
+  103 / 255
 );
 
 const CREAM = rgb(
@@ -57,14 +67,6 @@ const CREAM = rgb(
 
 function mm(value) {
   return value * 72 / 25.4;
-}
-
-/*
-  pdf-lib כותב משמאל לימין.
-  לכן בשביל עברית הופכים את סדר התווים לצורך הצגה.
-*/
-function rtl(text) {
-  return Array.from(text).reverse().join("");
 }
 
 async function createMission001() {
@@ -78,38 +80,45 @@ async function createMission001() {
   /*
     טוענים את תבנית ה-PDF
   */
-  const templateBytes = fs.readFileSync(TEMPLATE_PATH);
+  const templateBytes =
+    fs.readFileSync(TEMPLATE_PATH);
 
-  const pdfDoc = await PDFDocument.load(templateBytes);
+  const pdfDoc =
+    await PDFDocument.load(templateBytes);
 
   pdfDoc.registerFontkit(fontkit);
 
   /*
-    טוענים פונטים
+    פונטים
   */
-  const bookmanBytes = fs.readFileSync(BOOKMAN_PATH);
-  const gishaBytes = fs.readFileSync(GISHA_PATH);
+  const bookmanBytes =
+    fs.readFileSync(BOOKMAN_PATH);
 
-  const bookmanFont = await pdfDoc.embedFont(
-    bookmanBytes,
-    { subset: true }
-  );
+  const gishaBytes =
+    fs.readFileSync(GISHA_PATH);
 
-  const gishaFont = await pdfDoc.embedFont(
-    gishaBytes,
-    { subset: true }
-  );
+  const bookmanFont =
+    await pdfDoc.embedFont(
+      bookmanBytes,
+      { subset: true }
+    );
 
-  const page = pdfDoc.getPages()[0];
+  const gishaFont =
+    await pdfDoc.embedFont(
+      gishaBytes,
+      { subset: true }
+    );
 
-  const { width, height } = page.getSize();
+  const page =
+    pdfDoc.getPages()[0];
+
+  const { width, height } =
+    page.getSize();
 
   /*
     ==========================================
     1. מספר המשימה
     ==========================================
-
-    קודם מכסים רק את 379 הקיים בתבנית.
   */
 
   page.drawRectangle({
@@ -122,14 +131,14 @@ async function createMission001() {
 
   const numberText = "001";
 
-  const numberSize = 20;
+  const numberSize = 19;
 
   page.drawText(numberText, {
     x: mm(69.5),
     y: height - mm(61.5),
     size: numberSize,
     font: bookmanFont,
-    color: BURGUNDY
+    color: GOLD
   });
 
   /*
@@ -138,21 +147,19 @@ async function createMission001() {
     ==========================================
   */
 
-  const visualMission = rtl(missionText);
-
   let missionFontSize = 15;
 
-  /*
-    אם המשימה ארוכה במיוחד, מקטינים מעט
-  */
   const maxMissionWidth = mm(88);
 
   let missionWidth =
     gishaFont.widthOfTextAtSize(
-      visualMission,
+      missionText,
       missionFontSize
     );
 
+  /*
+    מקטינים אוטומטית אם המשפט ארוך
+  */
   while (
     missionWidth > maxMissionWidth &&
     missionFontSize > 11
@@ -161,20 +168,20 @@ async function createMission001() {
 
     missionWidth =
       gishaFont.widthOfTextAtSize(
-        visualMission,
+        missionText,
         missionFontSize
       );
   }
 
   /*
-    ממורכז אופקית
+    ממרכזים את המשפט
   */
   const missionX =
     (width - missionWidth) / 2;
 
-  page.drawText(visualMission, {
+  page.drawText(missionText, {
     x: missionX,
-    y: height - mm(91),
+    y: height - mm(86),
     size: missionFontSize,
     font: gishaFont,
     color: BURGUNDY
@@ -205,9 +212,6 @@ async function createMission001() {
   const qrImage =
     await pdfDoc.embedPng(qrBuffer);
 
-  /*
-    QR בתוך המסגרת שכבר קיימת ב-PDF
-  */
   const qrSize = mm(32);
 
   page.drawImage(qrImage, {
@@ -220,6 +224,7 @@ async function createMission001() {
   /*
     שמירה
   */
+
   const outputBytes =
     await pdfDoc.save();
 
