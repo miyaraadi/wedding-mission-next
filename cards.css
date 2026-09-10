@@ -32,10 +32,12 @@ body {
   page-break-after: always;
   break-after: page;
 
+  background-color: #fef9eb;
+
   background-image: url("/card-background.png");
   background-size: 120mm 180mm;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position: center 1.76mm;
 
   color: var(--brown);
 }
